@@ -4,7 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -62,18 +62,18 @@ model User {
 // account model
 
 model Account {
-  id                String    @id @default(cuid())
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refreshToken      String?   @db.Text
-  accessToken       String?   @db.Text
-  expiresAt         DateTime?
+  refreshToken      String? @db.Text
+  accessToken       String? @db.Text
+  expiresAt         Int?
   tokenType         String?
   scope             String?
-  idToken           String?   @db.Text
-  sessionState    String?
+  idToken           String? @db.Text
+  sessionState      String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -86,7 +86,7 @@ model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
-  expireAt    DateTime
+  expireAt     DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -95,7 +95,7 @@ model Session {
 model VerificationToken {
   identifier String
   token      String   @unique
-  expireAt    DateTime
+  expireAt   DateTime
 
   @@id([identifier, token])
 }
@@ -143,7 +143,7 @@ model Subscription {
   id                   String   @id @default(cuid())
   workspaceId          String
   paddleSubscriptionId String?  @unique
-  status               String   // TODO: What does status mean?
+  status               String // TODO: What does status mean?
   currentPeriodStart   DateTime
   currentPeriodEnd     DateTime
 
@@ -175,7 +175,7 @@ model Project {
   id          String        @id @default(cuid())
   workspaceId String
   clientId    String
-  title        String
+  title       String
   status      ProjectStatus @default(BACKLOG)
   startDate   DateTime?
   dueDate     DateTime?
