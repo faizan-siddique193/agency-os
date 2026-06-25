@@ -60,9 +60,9 @@
   --popover: oklch(100% 0 0);
   --popover-foreground: oklch(21% 0.03 255);
 
-  /* Brand Primary */
-  --primary: oklch(54% 0.24 275);
-  --primary-foreground: oklch(100% 0 0);
+  /* Brand Primary - Now strictly Deep Slate/Monochrome */
+  --primary: oklch(21% 0.03 255);
+  --primary-foreground: oklch(98% 0.01 255);
 
   /* Secondary / Muted */
   --secondary: oklch(95% 0.01 255);
@@ -82,8 +82,8 @@
   --border: oklch(91% 0.01 255);
   --input: oklch(91% 0.01 255);
 
-  /* Focus */
-  --ring: oklch(54% 0.24 275);
+  /* Focus - Matches Primary */
+  --ring: oklch(21% 0.03 255);
 
   /* Charts */
   --chart-1: oklch(54% 0.24 275);
@@ -99,14 +99,15 @@
   --sidebar: oklch(100% 0 0);
   --sidebar-foreground: oklch(21% 0.03 255);
 
-  --sidebar-primary: oklch(54% 0.24 275);
-  --sidebar-primary-foreground: oklch(100% 0 0);
+  /* Sidebar Primary - Now strictly Deep Slate/Monochrome */
+  --sidebar-primary: oklch(21% 0.03 255);
+  --sidebar-primary-foreground: oklch(98% 0.01 255);
 
   --sidebar-accent: oklch(96% 0.01 255);
   --sidebar-accent-foreground: oklch(21% 0.03 255);
 
   --sidebar-border: oklch(91% 0.01 255);
-  --sidebar-ring: oklch(54% 0.24 275);
+  --sidebar-ring: oklch(21% 0.03 255);
 }
 
 .dark {
@@ -147,9 +148,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 // Initialize the Inter font
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased bg-background text-foreground`}>
         {children}
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

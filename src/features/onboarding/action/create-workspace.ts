@@ -22,7 +22,7 @@ function generateSlug(name: string): string {
 export async function createWorkspace(
     formData: FormData
 ): Promise<ActionResponse> {
-    // Auth
+    // Auth (check user)
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
