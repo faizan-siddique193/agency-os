@@ -71,10 +71,13 @@ export async function createWorkspace(
                 },
             });
 
-            // 3. Update onboarding step
+            // 3. Advance onboarding step → INVITE and pin this as the default workspace
             await tx.user.update({
                 where: { id: userId },
-                data: { onboardingStep: 2 },
+                data: {
+                    onboardingStep: "INVITE",
+                    defaultWorkspaceId: newWorkspace.id,
+                },
             });
 
             return newWorkspace;

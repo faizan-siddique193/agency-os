@@ -76,8 +76,11 @@ export function InviteTeamForm({ workspaceId }: InviteTeamFormProps) {
     router.push("/onboarding/trial");
   };
 
-  const handleSkip = () => {
-    router.push("/onboarding/trial");
+  const handleSkip = async () => {
+    const res = await inviteTeamMembers([], workspaceId);
+    if (res.success) {
+      router.push("/onboarding/trial");
+    }
   };
 
   return (

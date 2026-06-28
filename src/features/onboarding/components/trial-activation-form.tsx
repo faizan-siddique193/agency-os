@@ -18,7 +18,7 @@ export function TrialActivationForm({ workspaceId }: TrialActivationFormProps) {
 
   const handleActivate = async () => {
     setIsSubmitting(true);
-    
+
     try {
       const res = await activateFreeTrial("agency", workspaceId);
 
@@ -29,7 +29,7 @@ export function TrialActivationForm({ workspaceId }: TrialActivationFormProps) {
       }
 
       toast.success("Welcome to AgencyOS!");
-      router.push("/dashboard");
+      router.push("/");
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong. Please try again.");
@@ -44,7 +44,7 @@ export function TrialActivationForm({ workspaceId }: TrialActivationFormProps) {
           You're all set.
         </h2>
         <p className="text-sm text-[oklch(21%_0.03_255)]/60 leading-relaxed">
-          Your workspace is ready. Start exploring<br/>
+          Your workspace is ready. Start exploring<br />
           agency-os — no commitment required.
         </p>
       </div>
@@ -68,9 +68,9 @@ export function TrialActivationForm({ workspaceId }: TrialActivationFormProps) {
         </div>
       </div>
 
-      <Button 
-        className="w-full h-11 rounded-[var(--radius)] font-semibold bg-[oklch(54%_0.24_275)] hover:bg-[oklch(48%_0.24_275)] text-white" 
-        onClick={handleActivate} 
+      <Button
+        className="w-full h-11 rounded-[var(--radius)] font-semibold bg-[oklch(54%_0.24_275)] hover:bg-[oklch(48%_0.24_275)] text-white"
+        onClick={handleActivate}
         disabled={isSubmitting}
       >
         {isSubmitting ? (

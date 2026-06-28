@@ -101,8 +101,7 @@ export async function activateFreeTrial(
       await tx.user.update({
         where: { id: userId },
         data: {
-          onboardingCompleted: true,
-          onboardingStep: 4,
+          onboardingStep: "COMPLETED",
         },
       });
     });

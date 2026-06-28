@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { enforceOnboardingStep } from "@/lib/auth/onboarding-guard";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
 import prisma from "@/lib/prisma";
@@ -10,23 +10,23 @@ export const metadata = {
 };
 
 export default async function InviteTeamPage() {
-  const session = await getServerSession(authOptions);
+  // Security gate: enforces step === INVITE, handles auth + redirect internally
+  await enforceOnboardingStep("INVITE");
 
-  if (!session?.user?.id) {
-    redirect("/api/auth/signin");
-  }
-
-  // Find the workspace this user just created (where they are OWNER)
+  // At this point the user is authenticated and on the correct step.
+  // We still need their OWNER membership to pass workspaceId to the form.
+  const session = await getServerSession(authOptions); // cached — no extra DB hit
   const membership = await prisma.workspaceMember.findFirst({
-    where: {
-      userId: session.user.id,
-      role: "OWNER",
-    },
+    where: { userId: session!.user!.id!, role: "OWNER" },
+    select: { workspaceId: true },
   });
 
+  // Guard already ensures onboardingStep === INVITE which is only set after
+  // workspace creation, so a missing OWNER membership is a data integrity error.
   if (!membership) {
-    // If they haven't created a workspace yet, send them back to step 1
-    redirect("/onboarding/workspace");
+    // Shouldn't happen, but fall back safely rather than crash
+    await enforceOnboardingStep("WORKSPACE"); // will redirect
+    return null;
   }
 
   return (

@@ -8,19 +8,18 @@ datasource db {
 }
 
 model User {
-  id                  String            @id @default(cuid())
-  name                String?
-  email               String?           @unique
-  emailVerified       DateTime?
-  image               String?
-  defaultWorkspaceId  String?
-  onboardingCompleted Boolean           @default(false)
-  onboardingStep      Int               @default(1)
-  accounts            Account[]
-  sentInvites         Invite[]          @relation("InvitedBy")
-  notifications       Notification[]
-  sessions            Session[]
-  workspaceMembers    WorkspaceMember[]
+  id                 String            @id @default(cuid())
+  name               String?
+  email              String?           @unique
+  emailVerified      DateTime?
+  image              String?
+  defaultWorkspaceId String?
+  onboardingStep     OnboardingStep    @default(WORKSPACE)
+  accounts           Account[]
+  sentInvites        Invite[]          @relation("InvitedBy")
+  notifications      Notification[]
+  sessions           Session[]
+  workspaceMembers   WorkspaceMember[]
 }
 
 model Account {
@@ -252,4 +251,11 @@ enum InviteStatus {
   PENDING
   ACCEPTED
   EXPIRED
+}
+
+enum OnboardingStep {
+  WORKSPACE
+  INVITE
+  TRIAL
+  COMPLETED
 }

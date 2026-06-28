@@ -4,41 +4,65 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/auth";
 
 export default async function RootTrafficCop() {
-  // 1. Authenticate the User
+  // 1. Authenticate
   const session = await getServerSession(authOptions);
 
-  // 2. If no valid session, redirect them to login
   if (!session?.user?.id) {
     redirect("/api/auth/signin?callbackUrl=/");
   }
 
   const userId = session.user.id;
 
-  // 3. Fetch the user's workspace connections
-  // We use `select` instead of `include` to pull the absolute minimum amount of data required from PostgreSQL.
-  const memberships = await prisma.workspaceMember.findMany({
-    where: { userId: userId },
+  // 2. Single query — fetch onboardingStep, defaultWorkspaceId, and first membership slug
+  //    in one round-trip. No N+1.
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
     select: {
-      workspace: {
+      onboardingStep: true,
+      defaultWorkspaceId: true,
+      workspaceMembers: {
         select: {
-          id: true,
-          slug: true,
-        }
-      }
+          workspace: { select: { slug: true } },
+        },
+        take: 1,
+        orderBy: { joinedAt: "asc" },
+      },
     },
-    take: 10, // Safeguard: We only need a handful to find a valid route
   });
 
-  // 4. Edge Case: User has no workspaces
-  if (memberships.length === 0) {
-    redirect("/onboarding/workspace");   // obviouly it will be the new user.
+  // 3. Impossible edge-case guard (user deleted mid-session)
+  if (!user) {
+    redirect("/api/auth/signin");
   }
 
-  // 5. Routing Logic
-  // Note: If you add `defaultWorkspaceId` to the User model later, you would query that first.
-  // For now, we safely route them to their first available workspace.
-  const targetSlug = memberships[0].workspace.slug;
+  // 4. Onboarding Gate — redirect incomplete users to their current step
+  if (user.onboardingStep !== "COMPLETED") {
+    // e.g. WORKSPACE → /onboarding/workspace | INVITE → /onboarding/invite
+    redirect(`/onboarding/${user.onboardingStep.toLowerCase()}`);
+  }
 
-  // 6. Execute the secure redirect
-  redirect(`/w/${targetSlug}/dashboard`); // Or `/w/${targetSlug}/dashboard` if that is your exact layout structure
+  // 5. Onboarding is COMPLETED — route to workspace dashboard
+  //    Priority: defaultWorkspaceId → first membership → back to onboarding
+  let targetSlug: string | null = null;
+
+  if (user.defaultWorkspaceId) {
+    // Fast path: resolve slug from the pinned default workspace
+    const defaultWorkspace = await prisma.workspace.findUnique({
+      where: { id: user.defaultWorkspaceId },
+      select: { slug: true },
+    });
+    targetSlug = defaultWorkspace?.slug ?? null;
+  }
+
+  // Fallback: use whichever workspace they joined first
+  if (!targetSlug) {
+    targetSlug = user.workspaceMembers[0]?.workspace.slug ?? null;
+  }
+
+  // Last resort: if somehow they completed onboarding but have no workspace, send them back
+  if (!targetSlug) {
+    redirect("/onboarding/workspace");
+  }
+
+  redirect(`/w/${targetSlug}/dashboard`);
 }

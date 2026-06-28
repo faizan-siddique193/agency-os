@@ -39,7 +39,7 @@ function LoginForm() {
   // Google handler
   const onGoogleSignIn = () => {
     setIsGoogleLoading(true);
-    signIn("google", { callbackUrl: "/dashboard" });
+    signIn("google", { callbackUrl: "/" });
   };
 
   // Success UI State
@@ -87,7 +87,7 @@ function LoginForm() {
             </div>
           )}
         />
-        
+
         {/* 4. Added the Submit Button INSIDE the form */}
         <Button
           type="submit"
@@ -100,7 +100,7 @@ function LoginForm() {
               <span>Sending link...</span>
             </>
           ) : (
-             "Continue with Email"
+            "Continue with Email"
           )}
         </Button>
       </form>

@@ -59,7 +59,7 @@ export async function inviteTeamMembers(
     // If they only tried to invite themselves, just advance onboarding
     await prisma.user.update({
       where: { id: userId },
-      data: { onboardingStep: 3 },
+      data: { onboardingStep: "TRIAL" },
     });
     return { success: true, data: { invitedCount: 0 } };
   }
@@ -128,10 +128,10 @@ export async function inviteTeamMembers(
       // Execute all upserts in parallel
       await Promise.all(upsertPromises);
 
-      // Advance onboarding step
+      // Advance onboarding step → TRIAL
       await tx.user.update({
         where: { id: userId },
-        data: { onboardingStep: 3 },
+        data: { onboardingStep: "TRIAL" },
       });
     });
 

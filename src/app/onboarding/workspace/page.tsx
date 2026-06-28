@@ -1,3 +1,4 @@
+import { enforceOnboardingStep } from "@/lib/auth/onboarding-guard";
 import { CreateWorkspaceForm } from "@/features/onboarding/components/create-workspace-form";
 
 export const metadata = {
@@ -5,7 +6,9 @@ export const metadata = {
   description: "Create a new workspace for your team.",
 };
 
-export default function WorkspacePage() {
+export default async function WorkspacePage() {
+  await enforceOnboardingStep("WORKSPACE");
+
   return (
     <div className="w-full animate-in fade-in slide-in-from-bottom-4 duration-500">
       <CreateWorkspaceForm />
