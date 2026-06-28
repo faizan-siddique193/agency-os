@@ -2,7 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import prisma from "./prisma";
+import prisma from "@/lib/prisma";
 import { Resend } from "resend";
 import { MagicLinkEmail } from "@/email/MagicLink";
 

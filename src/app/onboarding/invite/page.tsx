@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth/auth";
 import prisma from "@/lib/prisma";
 import { InviteTeamForm } from "@/features/onboarding/components/invite-team-form";
 

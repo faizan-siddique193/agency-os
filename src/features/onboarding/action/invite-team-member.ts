@@ -1,7 +1,7 @@
 "use server";
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/auth/auth";
 import prisma from "@/lib/prisma";
 import { inviteTeamMembersSchema } from "../schema/invite-team-member.schema";
 import { InviteTeamMemberEmailTemplate } from "@/email/InviteTeamMember";
