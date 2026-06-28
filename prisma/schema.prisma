@@ -1,313 +1,255 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-    provider = "prisma-client-js"
-    output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
-    provider = "postgresql"
+  provider = "postgresql"
 }
 
-// roles enum
+model User {
+  id                  String            @id @default(cuid())
+  name                String?
+  email               String?           @unique
+  emailVerified       DateTime?
+  image               String?
+  defaultWorkspaceId  String?
+  onboardingCompleted Boolean           @default(false)
+  onboardingStep      Int               @default(1)
+  accounts            Account[]
+  sentInvites         Invite[]          @relation("InvitedBy")
+  notifications       Notification[]
+  sessions            Session[]
+  workspaceMembers    WorkspaceMember[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  scope             String?
+  sessionState      String?
+  access_token      String?
+  expires_at        Int?
+  id_token          String?
+  refresh_token     String?
+  token_type        String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model Workspace {
+  id               String            @id @default(cuid())
+  name             String
+  slug             String            @unique
+  logoURL          String?
+  paddleCustomerId String?           @unique
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  clients          Client[]
+  invites          Invite[]
+  notifications    Notification[]
+  projects         Project[]
+  subscriptions    Subscription[]
+  members          WorkspaceMember[]
+}
+
+model WorkspaceMember {
+  id          String    @id @default(cuid())
+  userId      String
+  workspaceId String
+  role        Role      @default(MEMBER)
+  joinedAt    DateTime  @default(now())
+  comments    Comment[]
+  invites     Invite[]
+  tasks       Task[]
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, workspaceId])
+}
+
+model Subscription {
+  id                   String    @id @default(cuid())
+  workspaceId          String
+  paddleSubscriptionId String?   @unique
+  status               String
+  currentPeriodStart   DateTime
+  currentPeriodEnd     DateTime
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  workspace            Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model Client {
+  id           String    @id @default(cuid())
+  workspaceId  String
+  name         String
+  contactName  String?
+  contactEmail String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  invoices     Invoice[]
+  projects     Project[]
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  workspaceId String
+  clientId    String
+  title       String
+  status      ProjectStatus @default(BACKLOG)
+  startDate   DateTime?
+  dueDate     DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  documents   Document[]
+  invoices    Invoice[]
+  client      Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  tasks       Task[]
+}
+
+model Task {
+  id          String           @id @default(cuid())
+  projectId   String
+  assigneeId  String?
+  title       String
+  description String?
+  status      TaskStatus       @default(TODO)
+  dueDate     DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  comments    Comment[]
+  assignee    WorkspaceMember? @relation(fields: [assigneeId], references: [id])
+  project     Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id        String          @id @default(cuid())
+  taskId    String
+  authorId  String
+  content   String
+  createdAt DateTime        @default(now())
+  author    WorkspaceMember @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  task      Task            @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  projectId String
+  name      String
+  fileUrl   String
+  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Invoice {
+  id          String        @id @default(cuid())
+  clientId    String
+  projectId   String?
+  status      InvoiceStatus @default(DRAFT)
+  totalAmount Float         @default(0)
+  issueDate   DateTime?
+  dueDate     DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  client      Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  project     Project?      @relation(fields: [projectId], references: [id])
+  lineItems   LineItem[]
+}
+
+model LineItem {
+  id          String  @id @default(cuid())
+  invoiceId   String
+  description String
+  quantity    Int     @default(1)
+  unitPrice   Float
+  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id          String    @id @default(cuid())
+  userId      String
+  workspaceId String
+  type        String
+  message     String
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model Invite {
+  id                String           @id @default(cuid())
+  email             String
+  token             String           @unique
+  status            String           @default("PENDING")
+  expiresAt         DateTime
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workspaceId       String
+  invitedById       String
+  workspaceMemberId String?
+  invitedBy         User             @relation("InvitedBy", fields: [invitedById], references: [id], onDelete: Cascade)
+  workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceMember   WorkspaceMember? @relation(fields: [workspaceMemberId], references: [id])
+
+  @@unique([email, workspaceId])
+}
+
 enum Role {
-    OWNER
-    ADMIN // admin or pm (can manage projects, tasks, invoices, and clients)
-    CLIENT
-    MEMBER
-    FREELANCER
+  ADMIN
+  CLIENT
+  MEMBER
+  FREELANCER
+  OWNER
 }
 
 enum ProjectStatus {
-    BACKLOG
-    IN_PROGRESS
-    REVIEW
-    COMPLETED
+  BACKLOG
+  IN_PROGRESS
+  REVIEW
+  COMPLETED
 }
 
-// task staus enum
 enum TaskStatus {
-    TODO
-    IN_PROGRESS
-    INTERNAL_REVIEW
-    EXTERNAL_REVIEW // external review mean client review
-    DONE
+  TODO
+  IN_PROGRESS
+  INTERNAL_REVIEW
+  EXTERNAL_REVIEW
+  DONE
 }
 
-// invoice status enum
 enum InvoiceStatus {
-    DRAFT
-    SENT
-    PAID
-    OVERDUE
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
 }
 
-// invite status enum
 enum InviteStatus {
-    PENDING
-    ACCEPTED
-    EXPIRED
-}
-
-// user model
-
-model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String? // avatar url 
-
-    onboardingCompleted Boolean           @default(false)
-    onboardingStep      Int               @default(1)
-    accounts            Account[]
-    sessions            Session[]
-    workspaceMembers    WorkspaceMember[]
-    notifications       Notification[]
-    sentInvites         Invite[]          @relation("InvitedBy")
-}
-
-// account model
-
-model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    sessionState      String?
-
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
-}
-
-// session model
-
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-// verification token model
-
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@id([identifier, token])
-}
-
-// workspace model
-
-model Workspace {
-    id               String   @id @default(cuid())
-    name             String
-    slug             String   @unique
-    logoURL          String?
-    paddleCustomerId String?  @unique
-    createdAt        DateTime @default(now())
-    updatedAt        DateTime @updatedAt
-
-    members       WorkspaceMember[]
-    subscriptions Subscription[]
-    projects      Project[]
-    notifications Notification[]
-    clients       Client[]
-    invites       Invite[]
-}
-
-// workspace member model
-
-model WorkspaceMember {
-    id          String   @id @default(cuid())
-    userId      String
-    workspaceId String
-    role        Role     @default(MEMBER)
-    joinedAt    DateTime @default(now())
-
-    user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-    workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-
-    tasks    Task[]
-    comments Comment[]
-    invites  Invite[]
-
-    // Ensures one specific role/membership per user per workspace
-    @@unique([userId, workspaceId])
-}
-
-// subscription model
-
-model Subscription {
-    id                   String   @id @default(cuid())
-    workspaceId          String
-    paddleSubscriptionId String?  @unique
-    status               String // TODO: What does status mean?
-    currentPeriodStart   DateTime
-    currentPeriodEnd     DateTime
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-}
-
-// client model
-
-model Client {
-    id           String   @id @default(cuid())
-    workspaceId  String
-    name         String
-    contactName  String?
-    contactEmail String?
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime @updatedAt
-
-    workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-    projects  Project[]
-    invoices  Invoice[]
-}
-
-// project model
-
-model Project {
-    id          String        @id @default(cuid())
-    workspaceId String
-    clientId    String
-    title       String
-    status      ProjectStatus @default(BACKLOG)
-    startDate   DateTime?
-    dueDate     DateTime?
-    createdAt   DateTime      @default(now())
-    updatedAt   DateTime      @updatedAt
-
-    workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-    client    Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
-
-    tasks     Task[]
-    documents Document[]
-    invoices  Invoice[]
-}
-
-// task model
-
-model Task {
-    id          String     @id @default(cuid())
-    projectId   String
-    assigneeId  String?
-    title       String
-    description String?    @db.Text
-    status      TaskStatus @default(TODO)
-    dueDate     DateTime?
-    createdAt   DateTime   @default(now())
-    updatedAt   DateTime   @updatedAt
-
-    project  Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
-    // Deleting a user just unassigns them, it doesn't delete the agency's task
-    assignee WorkspaceMember? @relation(fields: [assigneeId], references: [id], onDelete: SetNull)
-    comments Comment[]
-}
-
-// comment model
-model Comment {
-    id        String   @id @default(cuid())
-    taskId    String
-    authorId  String
-    content   String   @db.Text
-    createdAt DateTime @default(now())
-
-    task   Task            @relation(fields: [taskId], references: [id], onDelete: Cascade)
-    author WorkspaceMember @relation(fields: [authorId], references: [id], onDelete: Cascade)
-}
-
-// document model
-
-model Document {
-    id        String   @id @default(cuid())
-    projectId String
-    name      String
-    fileUrl   String
-    createdAt DateTime @default(now())
-
-    project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-}
-
-// invoice model
-
-model Invoice {
-    id          String        @id @default(cuid())
-    clientId    String
-    projectId   String?
-    status      InvoiceStatus @default(DRAFT)
-    totalAmount Float         @default(0)
-    issueDate   DateTime?
-    dueDate     DateTime?
-    createdAt   DateTime      @default(now())
-    updatedAt   DateTime      @updatedAt
-
-    client    Client     @relation(fields: [clientId], references: [id], onDelete: Cascade)
-    project   Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
-    lineItems LineItem[]
-}
-
-// line item model
-
-model LineItem {
-    id          String @id @default(cuid())
-    invoiceId   String
-    description String
-    quantity    Int    @default(1)
-    unitPrice   Float
-
-    invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
-}
-
-// notification model
-
-model Notification {
-    id          String   @id @default(cuid())
-    userId      String
-    workspaceId String
-    type        String
-    message     String
-    isRead      Boolean  @default(false)
-    createdAt   DateTime @default(now())
-
-    user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-    workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-}
-
-// invite model
-model Invite {
-    id          String   @id @default(cuid())
-    email       String
-    token       String   @unique
-    status      String   @default("PENDING")
-    expiresAt   DateTime
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    workspaceId String
-    invitedById String
-
-    workspace         Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-    invitedBy         User             @relation("InvitedBy", fields: [invitedById], references: [id], onDelete: Cascade)
-    workspaceMember   WorkspaceMember? @relation(fields: [workspaceMemberId], references: [id])
-    workspaceMemberId String?
-
-    // This is PERFECT. Keep this so our Promise.all() upsert works flawlessly.
-    @@unique([email, workspaceId])
+  PENDING
+  ACCEPTED
+  EXPIRED
 }
