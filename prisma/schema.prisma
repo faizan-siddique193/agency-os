@@ -113,20 +113,35 @@ model Client {
 }
 
 model Project {
-  id          String        @id @default(cuid())
+  id          String  @id @default(cuid())
+  title       String
+  description String? @db.Text
+
+  status   ProjectStatus   @default(ACTIVE)
+  health   ProjectHealth   @default(ON_TRACK)
+  priority ProjectPriority @default(MEDIUM)
+
+  startDate DateTime?
+  dueDate   DateTime?
+  budget    Int?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
   workspaceId String
   clientId    String
-  title       String
-  status      ProjectStatus @default(BACKLOG)
-  startDate   DateTime?
-  dueDate     DateTime?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  documents   Document[]
-  invoices    Invoice[]
-  client      Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  tasks       Task[]
+
+  tasks     Task[]
+  documents Document[]
+  invoices  Invoice[]
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  client    Client    @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  @@index([workspaceId, clientId])
+  @@index([workspaceId, deletedAt])
+  @@index([workspaceId, status])
 }
 
 model Task {
@@ -226,10 +241,23 @@ enum Role {
 }
 
 enum ProjectStatus {
-  BACKLOG
-  IN_PROGRESS
-  REVIEW
+  DRAFT
+  ACTIVE
   COMPLETED
+  ARCHIVED
+}
+
+enum ProjectHealth {
+  ON_TRACK
+  AT_RISK
+  BLOCKED
+}
+
+enum ProjectPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
 }
 
 enum TaskStatus {
