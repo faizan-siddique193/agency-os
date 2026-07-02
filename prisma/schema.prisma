@@ -73,16 +73,17 @@ model Workspace {
 }
 
 model WorkspaceMember {
-  id          String    @id @default(cuid())
+  id          String          @id @default(cuid())
   userId      String
   workspaceId String
-  role        Role      @default(MEMBER)
-  joinedAt    DateTime  @default(now())
+  role        Role            @default(MEMBER)
+  joinedAt    DateTime        @default(now())
   comments    Comment[]
   invites     Invite[]
   tasks       Task[]
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  projects    ProjectMember[]
 
   @@unique([userId, workspaceId])
 }
@@ -136,12 +137,29 @@ model Project {
   documents Document[]
   invoices  Invoice[]
 
-  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  client    Client    @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  workspace      Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  client         Client          @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  projectMembers ProjectMember[]
 
   @@index([workspaceId, clientId])
   @@index([workspaceId, deletedAt])
   @@index([workspaceId, status])
+}
+
+model ProjectMember {
+  id   String                @id @default(cuid())
+  role ProjectAssignmentRole @default(CONTRIBUTOR)
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  workspaceMemberId String
+  workspaceMember   WorkspaceMember @relation(fields: [workspaceMemberId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, workspaceMemberId])
+  @@index([workspaceMemberId])
 }
 
 model Task {
@@ -258,6 +276,11 @@ enum ProjectPriority {
   MEDIUM
   HIGH
   URGENT
+}
+
+enum ProjectAssignmentRole {
+  CONTRIBUTOR
+  LEAD
 }
 
 enum TaskStatus {
