@@ -35,7 +35,7 @@ export default async function DashboardLayout({
             <SidebarInset>
                 <TopHeader user={tenant.user} workspace={tenant.workspace} />
 
-                <main className="flex flex-1 flex-col gap-4 p-6 lg:p-8">
+                <main className="flex flex-1 flex-col gap-4 p-6 lg:p-8 overflow-y-auto overflow-x-hidden min-w-0">
                     {children}
                 </main>
             </SidebarInset>

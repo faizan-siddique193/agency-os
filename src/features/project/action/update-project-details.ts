@@ -38,8 +38,8 @@ export async function updateProjectDetails(
             select: { id: true },
         });
 
-        revalidatePath(`/${slug}/projects/${projectId}`);
-        revalidatePath(`/${slug}/projects`);
+        revalidatePath(`/w/${slug}/projects/${projectId}`);
+        revalidatePath(`/w/${slug}/projects`);
 
         return { success: true };
     } catch (error) {

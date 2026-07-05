@@ -1,24 +1,19 @@
-import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { Plus } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { getTenantContext } from "@/lib/auth/tenant-context";
-import { ProjectTable } from "@/features/project/component/ProjectTable";
-import { ProjectKanban } from "@/features/project/component/ProjectKanban";
 import { CreateProjectModal } from "@/features/project/component/CreateProjectModal";
-import { ProjectsToolbar } from "@/features/project/component/ProjectsToolbar";
-import { ProjectsListSkeleton } from "@/features/project/component/ProjectSkeleton";
-import { ProjectEmptyState } from "@/features/project/component/ProjectEmptyState";
+import { ProjectsViewManager } from "@/features/project/component/ProjectsViewManager";
 import type { ProjectStatus, ProjectHealth, ProjectPriority } from "@/generated/prisma";
 
-interface ProjectsPageProps {
-    params: Promise<{ slug: string }>;
-    searchParams: Promise<{
-        view?: "table" | "kanban";
-        search?: string;
-        status?: ProjectStatus;
-    }>;
-}
+/**
+ * Force dynamic rendering — this page reads a session cookie (via getTenantContext)
+ * and must never be statically cached, even partially under Next.js PPR.
+ */
+export const dynamic = "force-dynamic";
+
+// ─── Shared type ──────────────────────────────────────────────────────────────
+// Exported so ProjectTable and ProjectKanban can import it without a circular ref.
 
 export type ProjectListItem = {
     id: string;
@@ -27,6 +22,7 @@ export type ProjectListItem = {
     health: ProjectHealth;
     priority: ProjectPriority;
     dueDate: Date | null;
+    /** budget stored as integer cents in DB; sanitized to plain Number before RSC serialization. */
     budget: number | null;
     client: { id: string; name: string };
     projectMembers: {
@@ -39,128 +35,104 @@ export type ProjectListItem = {
     }[];
 };
 
-async function ProjectsContent({
-    slug,
-    view,
-    search,
-    status,
-    workspaceId,
-    memberRole,
-}: {
-    slug: string;
-    view: "table" | "kanban";
-    search: string | undefined;
-    status: ProjectStatus | undefined;
-    workspaceId: string;
-    memberRole: string;
-}) {
-    const projects = await prisma.project.findMany({
-        where: {
-            workspaceId,
-            deletedAt: null,
-            ...(status ? { status } : {}),
-            ...(search
-                ? { title: { contains: search, mode: "insensitive" } }
-                : {}),
-        },
-        select: {
-            id: true,
-            title: true,
-            status: true,
-            health: true,
-            priority: true,
-            dueDate: true,
-            budget: true,
-            client: { select: { id: true, name: true } },
-            projectMembers: {
-                select: {
-                    id: true,
-                    role: true,
-                    workspaceMember: {
-                        select: {
-                            id: true,
-                            user: { select: { id: true, name: true, image: true } },
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+interface ProjectsPageProps {
+    params: Promise<{ slug: string }>;
+}
+
+export default async function ProjectsPage({ params }: ProjectsPageProps) {
+    const { slug } = await params;
+
+    const tenant = await getTenantContext(slug);
+    if (!tenant) notFound();
+
+    // Parallel DB reads — eliminates the sequential waterfall.
+    // Both queries run simultaneously against the Neon connection pool.
+    const [rawProjects, clients] = await Promise.all([
+        prisma.project.findMany({
+            where: {
+                workspaceId: tenant.workspace.id,
+                deletedAt: null,
+            },
+            select: {
+                id: true,
+                title: true,
+                status: true,
+                health: true,
+                priority: true,
+                dueDate: true,
+                budget: true,
+                client: { select: { id: true, name: true } },
+                projectMembers: {
+                    select: {
+                        id: true,
+                        role: true,
+                        workspaceMember: {
+                            select: {
+                                id: true,
+                                user: { select: { id: true, name: true, image: true } },
+                            },
                         },
                     },
                 },
             },
-        },
-        orderBy: { createdAt: "desc" },
-    });
+            orderBy: { createdAt: "desc" },
+        }),
+        prisma.client.findMany({
+            where: { workspaceId: tenant.workspace.id },
+            select: { id: true, name: true },
+            orderBy: { name: "asc" },
+        }),
+    ]);
 
-    if (projects.length === 0) {
-        return <ProjectEmptyState slug={slug} memberRole={memberRole} />;
-    }
-
-    if (view === "kanban") {
-        return (
-            <ProjectKanban
-                projects={projects as ProjectListItem[]}
-                slug={slug}
-                memberRole={memberRole}
-            />
-        );
-    }
-
-    return (
-        <ProjectTable
-            projects={projects as ProjectListItem[]}
-            slug={slug}
-            memberRole={memberRole}
-        />
-    );
-}
-
-export default async function ProjectsPage({
-    params,
-    searchParams,
-}: ProjectsPageProps) {
-    const { slug } = await params;
-    const { view = "table", search, status } = await searchParams;
-
-    const tenant = await getTenantContext(slug);
-
-    const clients = await prisma.client.findMany({
-        where: { workspaceId: tenant.workspace.id },
-        select: { id: true, name: true },
-        orderBy: { name: "asc" },
-    });
+    /**
+     * Decimal sanitization — Prisma returns `budget` as a `Prisma.Decimal` object.
+     * React Server Components cannot serialize non-plain objects across the RSC
+     * boundary. Convert each to a plain `number` (or null) before passing to
+     * any Client Component.
+     */
+    const projects: ProjectListItem[] = rawProjects.map((p) => ({
+        ...p,
+        budget: p.budget != null ? Number(p.budget) : null,
+    }));
 
     return (
         <div className="flex flex-col gap-6">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            {/* ── Page Header ───────────────────────────────────────────── */}
+            <div className="flex items-center justify-between w-full min-w-0">
+                <div className="min-w-0 flex-1">
+                    <h1 className="text-2xl font-bold tracking-tight text-foreground truncate">
                         Projects
                     </h1>
-                    <p className="text-sm text-muted-foreground mt-0.5">
+                    <p className="text-sm text-muted-foreground mt-0.5 truncate">
                         Manage and track all active client work.
                     </p>
                 </div>
-                <CreateProjectModal
-                    slug={slug}
-                    clients={clients}
-                    memberRole={tenant.membership.role}
-                />
+                {/* CreateProjectModal stays in the Server Component shell so it
+                    always has the freshest client list without client fetching. */}
+                <div className="flex-shrink-0 ml-4">
+                    <CreateProjectModal
+                        slug={slug}
+                        clients={clients}
+                        memberRole={tenant.membership.role}
+                    />
+                </div>
             </div>
 
-            <ProjectsToolbar
+            {/*
+             * ProjectsViewManager is the single client boundary for the entire
+             * projects list. It owns:
+             *   - view toggle (table / kanban) — pure useState, zero server calls
+             *   - search + filter — useMemo on the in-memory array
+             *   - useOptimistic — single source of truth for status mutations
+             */}
+            <ProjectsViewManager
+                projects={projects}
+                clients={clients}
                 slug={slug}
-                currentView={view as "table" | "kanban"}
-                currentSearch={search}
-                currentStatus={status as ProjectStatus | undefined}
+                memberRole={tenant.membership.role}
             />
-
-            <Suspense fallback={<ProjectsListSkeleton />}>
-                <ProjectsContent
-                    slug={slug}
-                    view={view as "table" | "kanban"}
-                    search={search}
-                    status={status as ProjectStatus | undefined}
-                    workspaceId={tenant.workspace.id}
-                    memberRole={tenant.membership.role}
-                />
-            </Suspense>
         </div>
     );
 }

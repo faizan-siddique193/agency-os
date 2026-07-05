@@ -77,12 +77,12 @@ export function CreateProjectModal({
         watch,
         formState: { errors },
     } = useForm<FormValues>({
-        resolver: zodResolver(createProjectSchema),
+        resolver: zodResolver(createProjectSchema) as never,
         defaultValues: {
             title: "",
             description: "",
             clientId: "",
-            // priority is handled by Zod schema default
+            priority: "MEDIUM",
             dueDate: null,
         },
     });
@@ -100,7 +100,7 @@ export function CreateProjectModal({
 
     if (!canCreate(memberRole)) return null;
 
-    async function onSubmit(values) {
+    async function onSubmit(values: FormValues) {
         setIsPending(true);
         try {
             const result = await createProject(slug, values);

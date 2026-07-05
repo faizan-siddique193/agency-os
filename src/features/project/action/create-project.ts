@@ -66,7 +66,7 @@ export async function createProject(
             }),
         ]);
 
-        revalidatePath(`/${slug}/projects`);
+        revalidatePath(`/w/${slug}/projects`);
 
         return { success: true, projectId: project.id };
     } catch (error) {

@@ -50,62 +50,74 @@ async function WarRoomContent({
     workspaceId: string;
     currentMemberId: string;
 }) {
-    const project = await prisma.project.findUnique({
-        where: { id: projectId, workspaceId, deletedAt: null },
-        select: {
-            id: true,
-            title: true,
-            description: true,
-            status: true,
-            health: true,
-            priority: true,
-            startDate: true,
-            dueDate: true,
-            budget: true,
-            createdAt: true,
-            updatedAt: true,
-            deletedAt: true,
-            client: {
-                select: { id: true, name: true, contactName: true },
+    // 1. Execute independent database reads in parallel to eliminate waterfalls
+    const [rawProject, workspaceMembers] = await Promise.all([
+        prisma.project.findFirst({
+            where: {
+                id: projectId,
+                workspaceId,
+                deletedAt: null
             },
-            projectMembers: {
-                select: {
-                    id: true,
-                    role: true,
-                    workspaceMember: {
-                        select: {
-                            id: true,
-                            role: true,
-                            user: {
-                                select: {
-                                    id: true,
-                                    name: true,
-                                    image: true,
-                                    email: true,
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                status: true,
+                health: true,
+                priority: true,
+                startDate: true,
+                dueDate: true,
+                budget: true,
+                createdAt: true,
+                updatedAt: true,
+                deletedAt: true,
+                client: {
+                    select: { id: true, name: true, contactName: true },
+                },
+                projectMembers: {
+                    select: {
+                        id: true,
+                        role: true,
+                        workspaceMember: {
+                            select: {
+                                id: true,
+                                role: true,
+                                user: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        image: true,
+                                        email: true,
+                                    },
                                 },
                             },
                         },
                     },
                 },
             },
-        },
-    });
+        }),
+        prisma.workspaceMember.findMany({
+            where: { workspaceId },
+            select: {
+                id: true,
+                role: true,
+                user: { select: { id: true, name: true, image: true, email: true } },
+            },
+            orderBy: { joinedAt: "asc" },
+        })
+    ]);
 
-    if (!project) notFound();
+    if (!rawProject) notFound();
 
-    const workspaceMembers = await prisma.workspaceMember.findMany({
-        where: { workspaceId },
-        select: {
-            id: true,
-            role: true,
-            user: { select: { id: true, name: true, image: true, email: true } },
-        },
-        orderBy: { joinedAt: "asc" },
-    });
+    // 2. Sanitize complex types (like Decimal -> Number) to guarantee clean RSC serialization
+    const project: ProjectDetail = {
+        ...rawProject,
+        budget: rawProject.budget ? Number(rawProject.budget) : null,
+    };
 
     return (
         <ProjectWarRoom
-            project={project as ProjectDetail}
+            project={project}
             slug={slug}
             memberRole={memberRole}
             currentMemberId={currentMemberId}

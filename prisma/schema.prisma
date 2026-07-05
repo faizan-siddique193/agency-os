@@ -291,6 +291,13 @@ enum TaskStatus {
   DONE
 }
 
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
 enum InvoiceStatus {
   DRAFT
   SENT
