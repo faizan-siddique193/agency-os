@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deliverable Review Modal</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "inverse-primary": "#c3c0ff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-error": "#ffffff",
+                        "primary-container": "#4f46e5",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-primary-fixed": "#0f0069",
+                        "on-surface": "#191c1e",
+                        "surface-tint": "#4d44e3",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-surface-variant": "#464555",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#a44100",
+                        "on-secondary-container": "#54647a",
+                        "background": "#f7f9fb",
+                        "primary": "#3525cd",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "outline": "#777587",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary": "#505f76",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-primary-container": "#dad7ff",
+                        "error": "#ba1a1a",
+                        "on-background": "#191c1e",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#351000",
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "tertiary": "#7e3000",
+                        "primary-fixed": "#e2dfff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "outline-variant": "#c7c4d8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "xxl": "48px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "h3": ["Inter"],
+                        "display": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-md": ["Inter"],
+                        "h1": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-body-md text-body-md text-on-background relative overflow-hidden">
+<!-- Background Layer (Blurred Dashboard) -->
+<div class="absolute inset-0 bg-black/50 backdrop-blur-sm z-10 flex items-center justify-center p-gutter">
+<img alt="Dashboard Background" class="absolute inset-0 w-full h-full object-cover -z-10 opacity-30 pointer-events-none" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqvekuuX_wbvmDKy5nfQfss0XjCOvR_SytpG5puiRh9YnJrHGJvOQlHVsOZjQMOT6LHDaNVZMLXvfxRonpSVlJfLzgQCc2H8P9uhcLtPnFHywb4qTrtLRxHKCaP0J4RVEbC_U-WqBb2WA2q7tkc9iw6zkkzLpyrCMnQmB5SVQP1rXDfkznUimyaP_9gLFbGdG89Qjbd1-CShw52nJ4NptaTwbAFXjB_GYqvZoM1GqtHKjpye3D6DxXPg3vlZhwDhyrAqaNtTbUAdY"/>
+<!-- Modal Container -->
+<div class="bg-surface-container-lowest w-full max-w-[700px] rounded-lg border border-outline-variant shadow-[0_4px_12px_rgba(15,23,42,0.05)] flex flex-col z-20">
+<!-- Header -->
+<div class="flex items-center justify-between px-lg py-md border-b border-outline-variant">
+<h2 class="font-h3 text-h3 text-on-surface">Review: Draft Logo Concepts</h2>
+<button aria-label="Close modal" class="text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="p-lg flex flex-col gap-lg">
+<!-- Deliverable Preview Area -->
+<div class="bg-surface-container-low rounded-lg border border-outline-variant h-[240px] flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[48px] mb-sm" style="font-variation-settings: 'FILL' 1;">image</span>
+<span class="font-body-md text-body-md">logo_concepts_v1.pdf</span>
+</div>
+<!-- Description Section -->
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Please review the three minimalist shield variations discussed in our last call.
+                    </p>
+</div>
+<!-- Feedback Field -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-md text-label-md text-on-surface" for="feedback">Your Feedback</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-md font-body-sm text-body-sm text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant resize-none" id="feedback" placeholder="Describe any changes or requested revisions here..." rows="4"></textarea>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="flex items-center justify-end gap-md px-lg py-md border-t border-outline-variant bg-surface-bright rounded-b-lg">
+<button class="px-md py-[10px] bg-surface-container-lowest border border-[#F59E0B] text-[#F59E0B] font-label-md text-label-md rounded-lg hover:bg-[#F59E0B]/5 transition-colors">
+                    Request Revision
+                </button>
+<button class="px-md py-[10px] bg-[#10B981] text-on-primary border border-[#10B981] font-label-md text-label-md rounded-lg hover:bg-[#10B981]/90 transition-colors shadow-sm">
+                    Approve &amp; Close
+                </button>
+</div>
+</div>
+</div>
+</body></html>

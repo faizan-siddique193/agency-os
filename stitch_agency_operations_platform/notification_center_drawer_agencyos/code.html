@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notification Center Slide-out Drawer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fb",
+                        "outline": "#777587",
+                        "on-tertiary-container": "#ffd2be",
+                        "tertiary-container": "#a44100",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed": "#e2dfff",
+                        "background": "#f7f9fb",
+                        "on-secondary-container": "#54647a",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-container": "#dad7ff",
+                        "surface-container": "#eceef0",
+                        "on-surface-variant": "#464555",
+                        "surface-variant": "#e0e3e5",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadc",
+                        "tertiary-fixed": "#ffdbcc",
+                        "secondary-fixed": "#d3e4fe",
+                        "secondary-container": "#d0e1fb",
+                        "surface-tint": "#4d44e3",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#7e3000",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "primary": "#3525cd",
+                        "surface-container-low": "#f2f4f6",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface": "#f7f9fb",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-container": "#4f46e5",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-primary-fixed": "#0f0069",
+                        "inverse-primary": "#c3c0ff",
+                        "inverse-on-surface": "#eff1f3",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary": "#505f76",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "container-max": "1440px",
+                        "md": "16px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "display": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h3": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h2": ["Inter"],
+                        "h1": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h3": ["20px", { "lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h1": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- Background Dashboard (Blurred) -->
+<div class="fixed inset-0 w-full h-screen overflow-hidden">
+<!-- SideNav (Shared Component logic applied visually to background) -->
+<nav class="bg-surface-container-lowest border-r border-outline-variant fixed left-0 top-0 h-screen w-[260px] flex flex-col py-lg px-md z-0 opacity-40">
+<div class="mb-xl px-sm">
+<span class="font-display text-display text-on-surface">AgencyOS</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Enterprise Suite</p>
+</div>
+<ul class="space-y-sm flex-1">
+<li><a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant font-medium" href="#"><span class="material-symbols-outlined">dashboard</span>Dashboard</a></li>
+<li><a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant font-medium" href="#"><span class="material-symbols-outlined">folder</span>Projects</a></li>
+<li><a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant font-medium" href="#"><span class="material-symbols-outlined">task_alt</span>Tasks</a></li>
+<li><a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant font-medium" href="#"><span class="material-symbols-outlined">group</span>Clients</a></li>
+<li><a class="flex items-center gap-md px-md py-sm rounded-lg text-on-surface-variant font-medium" href="#"><span class="material-symbols-outlined">badge</span>Team</a></li>
+</ul>
+</nav>
+<!-- TopNav (Shared Component logic applied visually to background) -->
+<header class="bg-surface border-b border-outline-variant fixed top-0 right-0 left-[260px] flex justify-between items-center h-[64px] px-xl z-0 opacity-40">
+<h1 class="font-h3 text-h3 font-semibold text-on-surface">Global Overview</h1>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<span class="material-symbols-outlined text-primary">notifications</span>
+<div class="w-8 h-8 rounded-full bg-surface-variant"></div>
+</div>
+</header>
+<!-- Main Content Area (Blurred) -->
+<main class="absolute top-[64px] left-[260px] right-0 bottom-0 p-lg opacity-40">
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-12 h-64 bg-surface-container-lowest rounded-lg border border-outline-variant"></div>
+<div class="col-span-8 h-96 bg-surface-container-lowest rounded-lg border border-outline-variant"></div>
+<div class="col-span-4 h-96 bg-surface-container-lowest rounded-lg border border-outline-variant"></div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 bg-on-surface/50 backdrop-blur-sm z-40"></div>
+<!-- The Overlay Drawer -->
+<aside class="fixed right-0 top-0 bottom-0 w-full max-w-[400px] bg-surface-container-lowest shadow-[[-4px_0_12px_rgba(15,23,42,0.05)]] z-50 flex flex-col">
+<!-- Header -->
+<div class="flex items-center justify-between px-lg py-md border-b border-surface-variant">
+<h2 class="font-h2 text-h2 text-on-surface">Notifications</h2>
+<div class="flex items-center gap-md">
+<button class="font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors">Mark all as read</button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors p-sm rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<!-- Notification Feed -->
+<div class="flex-1 overflow-y-auto">
+<!-- Alert 1 (Budget Warning) -->
+<div class="flex items-start gap-md p-md border-b border-surface-variant hover:bg-surface transition-colors cursor-pointer group">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start gap-sm">
+<p class="font-label-md text-label-md text-on-surface truncate">Budget Alert: TechCorp Rebrand</p>
+<span class="flex-shrink-0 font-label-sm text-label-sm text-on-surface-variant">10m ago</span>
+</div>
+<p class="mt-xs font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Project has consumed 80% of allocated hours. Review required.</p>
+</div>
+</div>
+<!-- Alert 2 (Client Action) -->
+<div class="flex items-start gap-md p-md border-b border-surface-variant hover:bg-surface transition-colors cursor-pointer group">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#D1FAE5] flex items-center justify-center">
+<span class="material-symbols-outlined text-[#059669]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start gap-sm">
+<p class="font-label-md text-label-md text-on-surface truncate">Client Approval</p>
+<span class="flex-shrink-0 font-label-sm text-label-sm text-on-surface-variant">2h ago</span>
+</div>
+<p class="mt-xs font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Sarah Jenkins approved Draft Logo Concepts.</p>
+</div>
+</div>
+<!-- Alert 3 (Team Assignment) -->
+<div class="flex items-start gap-md p-md border-b border-surface-variant hover:bg-surface transition-colors cursor-pointer group">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">person_add</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start gap-sm">
+<p class="font-label-md text-label-md text-on-surface truncate">New Task Assigned</p>
+<span class="flex-shrink-0 font-label-sm text-label-sm text-on-surface-variant">Yesterday</span>
+</div>
+<p class="mt-xs font-body-sm text-body-sm text-on-surface-variant line-clamp-2">You were assigned to Export SVG Assets.</p>
+</div>
+</div>
+</div>
+</aside>
+</body></html>

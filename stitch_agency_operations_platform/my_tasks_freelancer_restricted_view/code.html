@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgencyOS - My Tasks</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#191c1e",
+                        "error": "#ba1a1a",
+                        "surface-container": "#eceef0",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-low": "#f2f4f6",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-secondary-container": "#54647a",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "outline": "#777587",
+                        "surface-tint": "#4d44e3",
+                        "surface": "#f7f9fb",
+                        "outline-variant": "#c7c4d8",
+                        "inverse-primary": "#c3c0ff",
+                        "background": "#f7f9fb",
+                        "on-surface-variant": "#464555",
+                        "tertiary-container": "#a44100",
+                        "surface-variant": "#e0e3e5",
+                        "primary": "#3525cd",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#d0e1fb",
+                        "secondary": "#505f76",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#351000",
+                        "on-primary-container": "#dad7ff",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#4f46e5",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "surface-bright": "#f7f9fb",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary": "#7e3000",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcc",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-background": "#191c1e",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary-fixed": "#e2dfff",
+                        "on-primary-fixed": "#0f0069"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "lg": "24px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "base": "4px",
+                        "xs": "4px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Inter"],
+                        "h2": ["Inter"],
+                        "display": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "h3": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h1": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "h3": ["20px", { "lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen w-full flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-inverse-surface border-r border-outline-variant dark:border-outline h-screen w-64 flex flex-col h-full py-lg px-md z-50">
+<div class="mb-xxl flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">layers</span>
+<div class="flex flex-col">
+<span class="font-h3 text-h3 font-bold text-primary dark:text-primary-fixed-dim tracking-tight">AgencyOS</span>
+<span class="font-label-sm text-label-sm text-secondary">Digital Agency</span>
+</div>
+</div>
+<div class="flex flex-col gap-sm flex-grow">
+<!-- Dashboard (Inactive) -->
+<!-- My Tasks (Active) -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-primary dark:text-inverse-primary font-bold border-r-2 border-primary bg-surface-container-low dark:bg-on-surface-variant transition-all duration-200 opacity-80 scale-[0.99]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+<span class="font-body-md text-body-md">My Tasks</span>
+</a>
+<!-- Settings (Inactive) -->
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-on-primary bg-primary-container font-bold transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-grow flex flex-col h-full overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center h-16 px-lg w-full flex-shrink-0 z-40">
+<div class="flex items-center gap-md">
+<!-- Search on left -->
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="h-[32px] w-64 pl-xl pr-sm bg-surface-container-lowest border border-outline-variant rounded-lg font-body-sm text-body-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="Search tasks..." type="text"/>
+</div>
+<h1 class="font-h2 text-h2 font-bold text-on-surface dark:text-inverse-on-surface md:hidden">My Tasks</h1>
+</div>
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate worker in a brightly lit, modern office environment. The image features a clean, high-key minimalist aesthetic with soft white lighting. The color palette emphasizes crisp whites and subtle blues, conveying a sense of focused professional authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoPZNht2Wq2xw-aJsNkfuhRh6Pn3XI1hPSQlPPstu74PAFE41RochACrq9jnt2DPZu__L80xTmszMAX0uuO_TqnZ_XPsMQy5J9-y1EAihPGi9upeLS9hm_rjqHCTdcagfVqN0DjKRUu36s2RbYDzBAM_54XlwUM2lLm6MpemEO1Oo977P720p8F-ptwk2SVbFZqQNvZKuSM2qvHizFKxkSTxqvwBUv3Nthvoq4Am3ZiscaE0__wABv9EeQeRfu8d7zXfTfalpK-ck"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<main class="flex-grow overflow-y-auto p-lg lg:p-xxl bg-background">
+<div class="max-w-[1080px] mx-auto flex flex-col gap-xl">
+<header class="flex justify-between items-end mb-sm hidden md:flex">
+<h1 class="font-display text-display text-on-surface">My Tasks</h1>
+</header>
+<!-- Row 1: Execution Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-secondary">Due Today</span>
+<span class="material-symbols-outlined text-outline">today</span>
+</div>
+<span class="font-display text-display text-on-surface">2</span>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-secondary">Upcoming This Week</span>
+<span class="material-symbols-outlined text-outline">calendar_month</span>
+</div>
+<span class="font-display text-display text-on-surface">5</span>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-lg flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-secondary">Completed Tasks</span>
+<span class="material-symbols-outlined text-outline">check_circle</span>
+</div>
+<span class="font-display text-display text-[rgb(16,185,129)]">18</span>
+</div>
+</div>
+<!-- Row 2: Task List -->
+<div class="flex flex-col gap-lg mt-md">
+<!-- Overdue Section -->
+<div class="flex flex-col gap-sm">
+<h2 class="font-label-sm text-label-sm text-error uppercase">Overdue</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex items-center justify-between hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-5 h-5 rounded border-2 border-outline flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<div class="flex flex-col">
+<span class="font-h3 text-h3 text-on-surface group-hover:text-primary transition-colors">Initial Competitor Audit</span>
+<span class="font-body-sm text-body-sm text-secondary">SaaS Mobile App</span>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<span class="px-2 py-1 bg-surface-variant text-on-surface-variant rounded font-label-sm text-label-sm whitespace-nowrap">To Do</span>
+<span class="font-body-sm text-body-sm text-error whitespace-nowrap flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                                    Yesterday
+                                </span>
+</div>
+</div>
+</div>
+<!-- Due Today Section -->
+<div class="flex flex-col gap-sm mt-md">
+<h2 class="font-label-sm text-label-sm text-on-surface uppercase">Due Today</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex items-center justify-between hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-5 h-5 rounded border-2 border-outline flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<div class="flex flex-col">
+<span class="font-h3 text-h3 text-on-surface group-hover:text-primary transition-colors">Moodboard Development</span>
+<span class="font-body-sm text-body-sm text-secondary">TechCorp Rebrand</span>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<span class="px-2 py-1 bg-[#FEF3C7] text-[#D97706] rounded font-label-sm text-label-sm whitespace-nowrap">In Progress</span>
+<span class="font-body-sm text-body-sm text-on-surface whitespace-nowrap">Today</span>
+</div>
+</div>
+</div>
+<!-- Upcoming Section -->
+<div class="flex flex-col gap-sm mt-md">
+<h2 class="font-label-sm text-label-sm text-secondary uppercase">Upcoming</h2>
+<div class="flex flex-col gap-sm">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex items-center justify-between hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-5 h-5 rounded border-2 border-outline flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<div class="flex flex-col">
+<span class="font-h3 text-h3 text-on-surface group-hover:text-primary transition-colors">Wireframe iterations</span>
+<span class="font-body-sm text-body-sm text-secondary">Nexus</span>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<span class="px-2 py-1 bg-surface-variant text-on-surface-variant rounded font-label-sm text-label-sm whitespace-nowrap">To Do</span>
+<span class="font-body-sm text-body-sm text-secondary whitespace-nowrap">May 14</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md flex items-center justify-between hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center gap-md">
+<div class="w-5 h-5 rounded border-2 border-outline flex items-center justify-center group-hover:border-primary transition-colors"></div>
+<div class="flex flex-col">
+<span class="font-h3 text-h3 text-on-surface group-hover:text-primary transition-colors">Export SVG Assets</span>
+<span class="font-body-sm text-body-sm text-secondary">Acme Corp</span>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<span class="px-2 py-1 bg-surface-variant text-on-surface-variant rounded font-label-sm text-label-sm whitespace-nowrap">To Do</span>
+<span class="font-body-sm text-body-sm text-secondary whitespace-nowrap">May 15</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

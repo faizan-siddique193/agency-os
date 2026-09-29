@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registration - EliteAgency</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#ffd2be",
+                      "tertiary-fixed-dim": "#ffb695",
+                      "background": "#fcf8ff",
+                      "secondary": "#565e74",
+                      "surface-bright": "#fcf8ff",
+                      "tertiary-fixed": "#ffdbcc",
+                      "inverse-surface": "#302f39",
+                      "on-error": "#ffffff",
+                      "inverse-primary": "#c3c0ff",
+                      "surface-variant": "#e4e1ee",
+                      "on-secondary-fixed-variant": "#3f465c",
+                      "secondary-fixed-dim": "#bec6e0",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#1b1b24",
+                      "tertiary-container": "#a44100",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#777587",
+                      "on-error-container": "#93000a",
+                      "primary": "#3525cd",
+                      "on-tertiary": "#ffffff",
+                      "tertiary": "#7e3000",
+                      "surface-container-low": "#f5f2ff",
+                      "on-background": "#1b1b24",
+                      "on-tertiary-fixed-variant": "#7b2f00",
+                      "surface-tint": "#4d44e3",
+                      "on-primary-fixed": "#0f0069",
+                      "surface": "#fcf8ff",
+                      "primary-container": "#4f46e5",
+                      "secondary-container": "#dae2fd",
+                      "secondary-fixed": "#dae2fd",
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#f3effc",
+                      "on-primary-container": "#dad7ff",
+                      "error": "#ba1a1a",
+                      "surface-dim": "#dcd8e5",
+                      "surface-container-highest": "#e4e1ee",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#eae6f4",
+                      "on-tertiary-fixed": "#351000",
+                      "on-primary-fixed-variant": "#3323cc",
+                      "on-secondary-fixed": "#131b2e",
+                      "on-secondary-container": "#5c647a",
+                      "on-surface-variant": "#464555",
+                      "surface-container": "#f0ecf9",
+                      "primary-fixed-dim": "#c3c0ff",
+                      "primary-fixed": "#e2dfff",
+                      "outline-variant": "#c7c4d8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "xs": "4px",
+                      "gutter": "24px",
+                      "margin": "40px",
+                      "xl": "32px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "h2": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "h1": [
+                              "Inter"
+                      ],
+                      "h3": [
+                              "Inter"
+                      ],
+                      "button": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h2": [
+                              "30px",
+                              {
+                                      "lineHeight": "38px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "h1": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "h3": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "button": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen">
+<main class="min-h-screen flex w-full">
+<!-- Left Column -->
+<div class="hidden lg:flex w-[45%] bg-primary-container relative flex-col justify-between overflow-hidden"><!-- Decorative Background Image / Mesh Fallback -->
+<div class="absolute inset-0 opacity-20 mix-blend-overlay">
+<img alt="An abstract generative mesh background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ui7ZN8U87qv4lpnP6idot2ZlyMI2sah0iCKchB7klUbCa3jYNBpJ5XST09myn3mPykvgzjbU2nlztOcyp0Nlz9rQnBg3FdLKomOTHYgQOD4nRXCV7skxWYe_p42iEf9ySeVGR75HoIm9bdfv9o9sysp9o-uWrRgLI6okT-lOpH1oXmiWUhzUV0aYmHAkxPnZiE66_X-IcfaLF4fZnwy6yJK0PeGc5hUWovAVVtRJrJt8CJYcRGWYs2Jg2I"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container via-primary-container to-primary opacity-90"></div>
+<!-- Subtle abstract geometric ring/gradient -->
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+<div class="relative z-10 p-margin flex flex-col h-full">
+<!-- Top Logo -->
+<div class="flex-none">
+<span class="font-h3 text-h3 font-bold text-surface-container-lowest flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">widgets</span>
+            EliteAgency
+        </span>
+</div>
+<!-- Centered Content -->
+<div class="flex-1 flex flex-col justify-center max-w-lg">
+<h1 class="font-h1 text-h1 text-surface-container-lowest font-bold tracking-tight mb-lg">Start scaling your agency today.</h1>
+<ul class="space-y-6 mt-12">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-surface-container-lowest mt-1 font-bold">check</span>
+<div>
+<p class="font-body-lg text-body-lg text-surface-container-lowest font-medium">Unlimited Client Portals</p>
+<p class="font-body-md text-body-md text-on-primary-container mt-1 opacity-80">Give every client a dedicated space for assets.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-surface-container-lowest mt-1 font-bold">check</span>
+<div>
+<p class="font-body-lg text-body-lg text-surface-container-lowest font-medium">Real-time Budget Tracking</p>
+<p class="font-body-md text-body-md text-on-primary-container mt-1 opacity-80">Monitor project burn rates with precision.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-surface-container-lowest mt-1 font-bold">check</span>
+<div>
+<p class="font-body-lg text-body-lg text-surface-container-lowest font-medium">Automated Deliverable Handoffs</p>
+<p class="font-body-md text-body-md text-on-primary-container mt-1 opacity-80">Streamline approvals and final delivery.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Bottom Trusted Section -->
+<div class="flex-none mt-12">
+<p class="text-[14px] text-white/70 mb-4">Trusted by 500+ top-tier agencies.</p>
+<div class="flex gap-6 opacity-50">
+<div class="w-8 h-8 bg-white rounded-sm"></div>
+<div class="w-8 h-8 bg-white rounded-full"></div>
+<div class="w-12 h-8 bg-white rounded-sm"></div>
+</div>
+</div>
+</div></div>
+<!-- Right Column -->
+<div class="w-full lg:w-[55%] bg-surface flex flex-col justify-center items-center p-gutter sm:p-margin relative">
+<!-- Mobile Brand Header (Visible only on small screens) -->
+<div class="lg:hidden absolute top-0 left-0 w-full p-gutter flex items-center justify-center">
+<span class="font-h3 text-h3 font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">widgets</span>
+                    EliteAgency
+                </span>
+</div>
+<div class="w-full max-w-md bg-surface-container-lowest rounded-[16px] shadow-[0_10px_15px_-3px_rgba(15,23,42,0.08)] border border-outline-variant p-lg sm:p-[40px] shadow-xl">
+<div class="mb-lg text-center">
+<h2 class="font-h2 text-h2 text-[#0F172A] mb-2">Create your workspace</h2>
+<p class="font-body-sm text-body-sm text-[#0F172A]">Enter your details to get started.</p>
+</div>
+<form class="space-y-md">
+<div>
+<label class="block font-label-caps text-label-caps text-[#0F172A] mb-2" for="fullName">Full Name</label>
+<input class="block w-full h-[52px] rounded-[8px] border border-[#E2E8F0] bg-surface-container-lowest px-4 font-body-md text-body-md text-[#0F172A] placeholder:text-[#64748B] focus:border-[#4F46E5] focus:ring focus:ring-[#4F46E5]/20 focus:outline-none transition-shadow" id="fullName" name="fullName" placeholder="Jane Doe" type="text"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-[#0F172A] mb-2" for="workEmail">Work Email</label>
+<input class="block w-full h-[52px] rounded-[8px] border border-[#E2E8F0] bg-surface-container-lowest px-4 font-body-md text-body-md text-[#0F172A] placeholder:text-[#64748B] focus:border-[#4F46E5] focus:ring focus:ring-[#4F46E5]/20 focus:outline-none transition-shadow" id="workEmail" name="workEmail" placeholder="jane@company.com" type="email"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-[#0F172A] mb-2" for="password">Password</label>
+<input class="block w-full h-[52px] rounded-[8px] border border-[#E2E8F0] bg-surface-container-lowest px-4 font-body-md text-body-md text-[#0F172A] placeholder:text-[#64748B] focus:border-[#4F46E5] focus:ring focus:ring-[#4F46E5]/20 focus:outline-none transition-shadow" id="password" name="password" placeholder="••••••••" type="password"/>
+</div>
+<div class="pt-2">
+<button class="w-full h-[52px] bg-[#4F46E5] text-surface-container-lowest rounded-[8px] font-button text-button hover:opacity-90 transition-colors flex items-center justify-center gap-2" type="submit">
+                            Create Account
+                        </button>
+</div>
+</form>
+</div>
+<div class="mt-8 text-center w-full max-w-md">
+<p class="font-body-sm text-body-sm text-[#0F172A]">
+                    Already have an account? <a class="text-[#4F46E5] hover:underline font-medium transition-colors" href="#">Sign in</a>
+</p>
+</div>
+<!-- Bottom spacing for mobile if needed, though flex-col justify-center handles it -->
+</div>
+</main>
+</body></html>

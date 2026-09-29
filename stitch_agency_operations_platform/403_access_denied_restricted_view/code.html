@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgencyOS - 403 Access Denied</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c3c0ff",
+                        "surface-bright": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#777587",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-primary-fixed": "#0f0069",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-surface": "#191c1e",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "background": "#f7f9fb",
+                        "tertiary-container": "#a44100",
+                        "surface-variant": "#e0e3e5",
+                        "on-secondary-fixed": "#0b1c30",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-tertiary": "#ffffff",
+                        "tertiary": "#7e3000",
+                        "on-background": "#191c1e",
+                        "primary-container": "#4f46e5",
+                        "primary-fixed": "#e2dfff",
+                        "surface-tint": "#4d44e3",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#54647a",
+                        "on-primary-container": "#dad7ff",
+                        "inverse-primary": "#c3c0ff",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary": "#3525cd",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary": "#505f76",
+                        "outline-variant": "#c7c4d8",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary-container": "#ffd2be",
+                        "on-surface-variant": "#464555"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display": ["Inter"],
+                        "h1": ["Inter"],
+                        "h2": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["20px", { "lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "display": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "h1": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "h2": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background flex h-screen overflow-hidden font-body-md text-on-background">
+<!-- SideNavBar Component -->
+<nav class="bg-surface-container-lowest border-r border-outline-variant flex flex-col h-full py-lg px-md w-64 fixed left-0 top-0 hidden md:flex transition-colors duration-200 ease-in-out z-10">
+<!-- Brand / Header -->
+<div class="flex items-center gap-sm mb-xl px-sm">
+<span class="material-symbols-outlined text-primary text-[28px] filled" data-icon="domain">domain</span>
+<div>
+<h1 class="font-h3 text-h3 text-primary">AgencyOS</h1>
+<p class="font-label-sm text-label-sm text-secondary">Enterprise</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<ul class="flex-1 space-y-sm">
+<!-- Active Item: Tasks (Since it's closest to 'My Tasks' user intent for this scenario) -->
+<li>
+<a class="flex items-center gap-md px-md py-sm rounded-lg bg-primary-container text-on-primary font-bold border-r-2 border-primary" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-label-md text-label-md">Tasks</span>
+</a>
+</li>
+<!-- Inactive Items -->
+<li>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+<span class="font-label-md text-label-md">Projects</span>
+</a>
+</li>
+<li>
+<a class="flex items-center justify-between px-md py-sm rounded-lg text-secondary opacity-60 cursor-not-allowed" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-md text-label-md">Clients</span>
+</div>
+<span class="material-symbols-outlined text-[18px]" data-icon="lock">lock</span>
+</a>
+</li>
+<li>
+<a class="flex items-center justify-between px-md py-sm rounded-lg text-secondary opacity-60 cursor-not-allowed" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-md text-label-md">Team</span>
+</div>
+<span class="material-symbols-outlined text-[18px]" data-icon="lock">lock</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</li>
+</ul>
+<!-- Footer / User Area -->
+<div class="mt-auto border-t border-outline-variant pt-md">
+<div class="flex items-center gap-sm px-sm mb-md">
+<img alt="Avatar" class="w-8 h-8 rounded-full" data-alt="A professional headshot of a woman with dark hair, smiling warmly, lit by soft natural studio light. The background is a pure, minimalist light grey, ensuring the focus remains on the subject. The image conveys approachability and professionalism, fitting seamlessly into a high-end B2B corporate interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVGRL6IG5zo2f0YUBorKSqa0XsvM95gpdpmE52FR4KLENP0quUO6RFf9KG4QkQj26DjliGReXxN0B9A8MmKewCJf37MNWhy5ku1WsBlCe_sfpv0KPDL4sagZ4Ydx6vXfiB0IbOOLc20YxhGMsSWy1RYMNkuAD30Zpnq3YWkB0E3r4KJBaCv9hRkMUFdfuRm-iAdl_OvAUJH6eBrpShpf-D60HRJ2Bn69hXqwMlH6jzFyDzpO7e2Z0cCSZsmiFHXc3mzZnSSaXmAr0"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Freelancer User</span>
+</div>
+</div>
+<a class="flex items-center gap-md px-md py-sm rounded-lg text-secondary hover:bg-surface-container transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Log out</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 md:ml-64 flex items-center justify-center p-lg relative bg-surface-bright">
+<!-- Background Pattern (Subtle grid to suggest technical/data environment) -->
+<div class="absolute inset-0 pointer-events-none opacity-[0.03]" style="background-image: radial-gradient(#191c1e 1px, transparent 1px); background-size: 32px 32px;"></div>
+<!-- 403 Error Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xxl shadow-sm max-w-[600px] w-full text-center relative z-10">
+<!-- Alert Icon -->
+<div class="mx-auto w-24 h-24 bg-error-container rounded-full flex items-center justify-center mb-lg">
+<span class="material-symbols-outlined text-[48px] text-error filled" data-icon="warning">warning</span>
+</div>
+<!-- Error Code & Title -->
+<h2 class="text-[96px] font-bold text-error leading-none mb-sm tracking-tighter">403</h2>
+<h3 class="font-display text-display text-on-surface mb-md">Access Denied</h3>
+<!-- Body Text -->
+<p class="font-body-lg text-body-lg text-secondary mb-xl max-w-md mx-auto">
+                This area contains restricted financial data limited to agency administrators. You do not have permission to view this resource.
+            </p>
+<!-- Action Button -->
+<button class="bg-primary-container text-on-primary font-label-md text-label-md px-xl py-md rounded-lg hover:bg-primary transition-colors inline-flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_back">arrow_back</span>
+                Back to My Dashboard
+            </button>
+</div>
+</main>
+</body></html>

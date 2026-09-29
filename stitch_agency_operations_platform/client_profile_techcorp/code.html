@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AgencyOS - Client Profile Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+</style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-primary-fixed-variant": "#3323cc",
+                "outline-variant": "#c7c4d8",
+                "outline": "#777587",
+                "primary-container": "#4f46e5",
+                "surface-container": "#eceef0",
+                "on-surface": "#191c1e",
+                "on-background": "#191c1e",
+                "error-container": "#ffdad6",
+                "on-tertiary-fixed-variant": "#7b2f00",
+                "primary-fixed-dim": "#c3c0ff",
+                "error": "#ba1a1a",
+                "inverse-primary": "#c3c0ff",
+                "on-primary": "#ffffff",
+                "surface-tint": "#4d44e3",
+                "on-surface-variant": "#464555",
+                "inverse-on-surface": "#eff1f3",
+                "on-secondary-fixed": "#0b1c30",
+                "on-secondary-container": "#54647a",
+                "surface-dim": "#d8dadc",
+                "tertiary-fixed-dim": "#ffb695",
+                "surface-container-highest": "#e0e3e5",
+                "background": "#f7f9fb",
+                "tertiary-fixed": "#ffdbcc",
+                "surface-variant": "#e0e3e5",
+                "primary": "#3525cd",
+                "on-primary-fixed": "#0f0069",
+                "primary-fixed": "#e2dfff",
+                "on-primary-container": "#dad7ff",
+                "surface-container-low": "#f2f4f6",
+                "secondary-fixed": "#d3e4fe",
+                "secondary": "#505f76",
+                "tertiary": "#7e3000",
+                "secondary-fixed-dim": "#b7c8e1",
+                "on-secondary-fixed-variant": "#38485d",
+                "secondary-container": "#d0e1fb",
+                "surface": "#f7f9fb",
+                "on-tertiary-container": "#ffd2be",
+                "on-error": "#ffffff",
+                "surface-bright": "#f7f9fb",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-high": "#e6e8ea",
+                "on-tertiary-fixed": "#351000",
+                "on-error-container": "#93000a",
+                "on-tertiary": "#ffffff",
+                "tertiary-container": "#a44100",
+                "on-secondary": "#ffffff",
+                "inverse-surface": "#2d3133"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "xl": "32px",
+                "xxl": "48px",
+                "base": "4px",
+                "gutter": "24px",
+                "md": "16px",
+                "xs": "4px",
+                "lg": "24px",
+                "container-max": "1440px",
+                "sm": "8px"
+        },
+        "fontFamily": {
+                "body-sm": [
+                        "Inter"
+                ],
+                "h3": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "label-md": [
+                        "Inter"
+                ],
+                "h2": [
+                        "Inter"
+                ],
+                "label-sm": [
+                        "Inter"
+                ],
+                "h1": [
+                        "Inter"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "display": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "body-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0",
+                                "fontWeight": "400"
+                        }
+                ],
+                "h3": [
+                        "20px",
+                        {
+                                "lineHeight": "28px",
+                                "letterSpacing": "0",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "letterSpacing": "0",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "h2": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "h1": [
+                        "30px",
+                        {
+                                "lineHeight": "38px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "letterSpacing": "0",
+                                "fontWeight": "400"
+                        }
+                ],
+                "display": [
+                        "36px",
+                        {
+                                "lineHeight": "44px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+</head>
+<body class="bg-background text-on-surface flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-[260px] bg-surface-container-lowest border-r border-outline-variant flex flex-col p-lg gap-lg z-10 hidden md:flex">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-lg">A</div>
+<div class="flex flex-col">
+<span class="font-h2 text-h2 font-bold text-primary">AgencyOS</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Enterprise Plan</span>
+</div>
+</div>
+<nav class="flex flex-col gap-sm flex-grow mt-xl">
+<a class="flex items-center gap-md text-on-surface-variant hover:text-primary px-md py-sm transition-colors duration-200 ease-in-out hover:bg-surface-container-high rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+        Dashboard
+      </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-primary px-md py-sm transition-colors duration-200 ease-in-out hover:bg-surface-container-high rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">work</span>
+        Projects
+      </a><a class="flex items-center gap-md text-on-surface-variant hover:text-primary px-md py-sm transition-colors duration-200 ease-in-out hover:bg-surface-container-high rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">task_alt</span>
+        Tasks
+      </a>
+<a class="flex items-center gap-md bg-primary-container text-on-primary-container rounded-lg px-md py-sm duration-200 ease-in-out font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+        Clients
+      </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-primary px-md py-sm transition-colors duration-200 ease-in-out hover:bg-surface-container-high rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">payments</span>
+        Financials
+      </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-primary px-md py-sm transition-colors duration-200 ease-in-out hover:bg-surface-container-high rounded-lg font-label-md text-label-md mt-auto" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+        Settings
+      </a>
+</nav>
+</aside>
+<!-- TopNavBar (Mobile Only Fallback, though instructions specify a sidebar layout, adding header for smaller screens is good practice) -->
+<header class="fixed top-0 left-0 w-full h-16 bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between px-lg z-10 md:hidden">
+<span class="font-h2 text-h2 font-bold text-primary">AgencyOS</span>
+<span class="material-symbols-outlined text-on-surface-variant">menu</span>
+</header>
+<!-- Main Content -->
+<main class="flex-1 ml-0 md:ml-[260px] mt-16 md:mt-0 p-[40px] max-w-container-max">
+<!-- Header Section -->
+<div class="flex flex-col gap-sm mb-xl">
+<a class="inline-flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors w-fit" href="#">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        Back to Directory
+      </a>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<h1 class="font-display text-display text-on-surface">TechCorp</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Enterprise Software Solutions</p>
+</div>
+<button class="bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md text-label-md px-md py-[10px] rounded-lg hover:bg-surface-container-low transition-colors duration-200 whitespace-nowrap shadow-sm h-10 flex items-center">
+          Edit Profile
+        </button>
+</div>
+</div>
+<!-- Grid Row 1 -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter mb-gutter">
+<!-- Contact Details Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<h2 class="font-h3 text-h3 text-on-surface mb-md">Contact Details</h2>
+<div class="flex items-center gap-md mb-lg">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img alt="Sarah Jenkins, VP of Marketing at TechCorp, professional headshot in a bright modern office." class="w-full h-full object-cover" data-alt="A professional headshot of a confident woman in her mid-30s, dressed in modern business attire. She is smiling softly against a brightly lit, out-of-focus modern office background with subtle blue and white tones. The lighting is high-key and flattering, conveying approachability and corporate professionalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwJ6Et86QSpuRxm_WQ1JnMbpSZUV40EiznxzEDY1JVX4npvuI9mieLT9KrCMppJBcL3fFh28UJx_RgKcfBxfU-X9Gdq01DAMfYNZUGtzwOcOnU1vs5GAOk9XLXJ0b2BigTLHrSfTzlaIziEDvOCjeBa0ZBa0UD8FgtEFWpPtnoAE-Wwkrh9B5Eua8Sh6vng29d6cvWj8Ldmmi-nuMQQRPXH_cJ_fHNpW-soeVTTSdN6KOF5cOdYFRI7XvMj6-_LtJMnzbIq7qS710"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Sarah Jenkins</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">VP of Marketing</p>
+</div>
+</div>
+<div class="flex flex-col gap-sm mb-lg">
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+<span class="font-body-sm text-body-sm">sarah@techcorp.com</span>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">phone</span>
+<span class="font-body-sm text-body-sm">+1 (555) 019-8372</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-md border-t border-outline-variant">
+<span class="font-label-md text-label-md text-on-surface">Portal Access</span>
+<div class="flex items-center gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">ON</span>
+<div class="w-10 h-6 bg-primary-container rounded-full relative cursor-pointer shadow-sm">
+<div class="absolute right-1 top-1 w-4 h-4 bg-on-primary rounded-full shadow"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Internal Notes Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-h3 text-h3 text-on-surface">Internal Notes</h2>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</button>
+</div>
+<div class="flex-1 bg-background rounded-lg p-md border border-outline-variant/50">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            TechCorp prefers highly technical, minimalist design. Always require a formal UX audit before signing off on UI. Billing is strict Net-30.
+          </p>
+</div>
+</div>
+</div>
+<!-- Grid Row 2: Project History -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-lg border-b border-outline-variant bg-surface-bright">
+<h2 class="font-h3 text-h3 text-on-surface">Project History</h2>
+</div>
+<div class="flex flex-col">
+<!-- List Row 1 -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between p-lg border-b border-outline-variant/50 hover:bg-background transition-colors gap-md">
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">TechCorp Rebrand</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Jan 2026 - Present</span>
+</div>
+<div class="flex items-center gap-xl sm:w-1/2 justify-between sm:justify-end">
+<div class="flex flex-col sm:items-end gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Budget</span>
+<span class="font-label-md text-label-md text-on-surface">$25,000</span>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/10 text-tertiary-container border border-tertiary-container/20">
+              In Progress
+            </span>
+</div>
+</div>
+<!-- List Row 2 -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between p-lg hover:bg-background transition-colors gap-md">
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-on-surface">Q4 Marketing Site</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Oct 2025 - Dec 2025</span>
+</div>
+<div class="flex items-center gap-xl sm:w-1/2 justify-between sm:justify-end">
+<div class="flex flex-col sm:items-end gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Budget</span>
+<span class="font-label-md text-label-md text-on-surface">$12,000</span>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-[#059669]/10 text-[#059669] border border-[#059669]/20">
+              Completed
+            </span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

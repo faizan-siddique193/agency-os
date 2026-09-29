@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AgencyOS — Internal Development Tracker
 
-## Getting Started
+**AgencyOS** is a B2B SaaS platform serving as the central operations engine for modern agencies. It handles project management, client portals, financial tracking, and team collaboration inside isolated, multi-tenant workspaces.
 
-First, run the development server:
+> **Note to Developers / AI Agents**: This README is the source of truth for our architectural standards, design patterns, and MVP module progress. **Read this before writing any new code.**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🏗️ Architectural Guidelines & Patterns
+
+To maintain a clean, secure, and production-ready codebase, we strictly follow these patterns:
+
+### 1. Folder Structure (Feature-Driven)
+All business logic is grouped by domain inside `src/features/`. Do not pollute the global `components/` or `lib/` folders with domain-specific code.
+```text
+src/features/<domain-name>/
+├── action/      # Server actions (e.g., create-client.ts)
+├── component/   # React components (e.g., ClientTable.tsx)
+├── schema/      # Zod validation schemas
+└── seed/        # Database seeding scripts for the domain
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Server Action Rules (Security First)
+Every server action must follow this exact sequence:
+1. **Validate Input**: Use `zod.safeParse()` on the raw payload.
+2. **Tenant Context**: Await `getTenantContext(slug)` to verify the user belongs to the workspace.
+3. **Permission Check**: Call `hasGlobalPermission(tenant.membership.role, 'resource:action')` to enforce PBAC.
+4. **Ownership Check**: If mutating an existing record, verify `record.workspaceId === tenant.workspace.id`.
+5. **Cache Invalidation**: Call `revalidatePath()` upon success.
+6. **Error Handling**: Return `{ success: false, error: string }` instead of throwing unhandled exceptions.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. 🔐 Tenant Isolation & Multi-Tenancy Architecture
+*   **Data Partitioning:** Every query executed via Prisma must append the `workspaceId` derived from `getTenantContext()`.
+*   **Row-Level Enforcement:** Do not pass unverified tenant structural parameters from client-side forms. Always resolve ownership on the server layout using the active session token.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Database Patterns (Prisma)
+- **IDs**: Always use `@default(cuid())` for primary keys.
+- **Multi-Tenancy**: Every business entity (Project, Client, Task) MUST have a `workspaceId` with a relation to the `Workspace` model.
+- **Financials**: All monetary values (e.g., `budget`) must be stored as `Int` (cents) to avoid floating-point math errors.
+- **Deletion**: Use `onDelete: Cascade` carefully. Prefer soft-deletes (`deletedAt DateTime?`) for critical records like Projects and Invoices.
 
-## Learn More
+### 5. UI & Styling
+- **Aesthetics**: Use Tailwind CSS, Lucide Icons, and `shadcn/ui`.
+- **Forms**: Use `react-hook-form` integrated with `@hookform/resolvers/zod`. Wrap inputs in the custom `<Field>` component for consistent label and error state styling.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 MVP Roadmap (M1 - M8)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Tracking our progress against the complete MVP feature specification.
 
-## Deploy on Vercel
+### [✅] Module 1: Authentication & Workspace Management
+- [x] Multi-tenant workspace creation (Data isolation).
+- [x] Role-based access control (Admin, Member, Freelancer, Client).
+- [x] Standard Login (Email + Password via Auth.js / NextAuth).
+- [x] Magic Link Invites (Tokenized).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### [✅] Module 2: Client Management
+- [x] Client Profiles & Central Directory.
+- [x] Project Linking (assign project to a client).
+- [x] Client Status Tracking (computed Active/Paused states).
+- [x] Client-Level Summaries (Project history per client).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### [🔄] Module 3: Project & Task Management
+- [x] Project Creation (Flat project spaces, hour budgets, due dates).
+- [ ] Task Creation & Assignment (Strict single-assignee).
+- [ ] 5-Stage Kanban Board & List View Toggle.
+- [ ] Task Context (Comments & S3-backed attachments).
+- [ ] Client Visibility Toggle on tasks.
+
+### [ ] Module 4: Team & Freelancer Management
+- [ ] Centralized Directory & Active task loads.
+- [ ] Scoped Project Assignment (Hiding the rest of the workspace).
+- [ ] Freelancer Portal (Restricted view, no financials).
+- [ ] One-Click Offboarding.
+- [ ] Personal Dashboard ("My Tasks").
+
+### [ ] Module 5: The Client Portal
+- [ ] Branded Dashboard via magic link.
+- [ ] Approval Workflow (Approve / Request Revision).
+- [ ] File Handoff (Permanent download section).
+- [ ] Audit Log (PDF-exportable).
+- [ ] PM Notifications on client activity.
+
+### [ ] Module 6: Scope & Financial Tracking
+- [ ] Time Logging (Task card, billable/non-billable).
+- [ ] Budget Burn Bar (Live visual tracker).
+- [ ] 80% Budget Alert.
+- [ ] Scope Change Logging.
+- [ ] Profitability Summary.
+
+### [ ] Module 7: Notifications & Workflow Triggers
+- [ ] In-App Feed.
+- [ ] Automated Triggers (Client review alerts, approval alerts).
+- [ ] Daily Digest Emails.
+
+### [ ] Module 8: Subscription & Billing
+- [ ] Database Gating (SubscriptionTier).
+- [ ] Stripe Integration (Checkout, webhooks, Customer Portal).
+- [ ] Server-Side Middleware & Upgrade Prompts.
+- [ ] 14-Day Trial Logic (Downgrades via cron).
+
+---
+
+## 💻 Local Development Setup
+
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Environment Variables
+Create a `.env` file at the root:
+```env
+# Neon PostgreSQL Database URL
+DATABASE_URL="postgresql://user:password@host/dbname?schema=public"
+
+# Auth setup (NextAuth/Auth.js)
+AUTH_SECRET="your-secret-here"
+```
+
+### 3. Database Sync & Seeding
+```bash
+# Push schema to database
+npx prisma migrate dev
+
+# Generate Prisma Client
+npx prisma generate
+
+# Seed initial roles, workspaces, and test data
+npm run seed
+```
+
+### 4. Run Development Server
+```bash
+npm run dev
+```
+Access the application at `http://localhost:3000`.
+
+---
+*Keep this document updated as architectural decisions evolve and new MVP modules are completed.*

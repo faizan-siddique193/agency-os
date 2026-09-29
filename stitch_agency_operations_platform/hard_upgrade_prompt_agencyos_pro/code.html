@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Upgrade Prompt Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#ffffff",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "tertiary-fixed": "#ffdbcc",
+                      "outline": "#777587",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "surface-variant": "#e0e3e5",
+                      "secondary-fixed": "#d3e4fe",
+                      "primary-fixed": "#e2dfff",
+                      "on-surface-variant": "#464555",
+                      "on-primary-container": "#dad7ff",
+                      "tertiary-container": "#a44100",
+                      "tertiary": "#7e3000",
+                      "surface-container": "#eceef0",
+                      "on-secondary": "#ffffff",
+                      "primary-container": "#4f46e5",
+                      "on-primary-fixed": "#0f0069",
+                      "surface-dim": "#d8dadc",
+                      "on-secondary-container": "#54647a",
+                      "surface-bright": "#f7f9fb",
+                      "inverse-on-surface": "#eff1f3",
+                      "surface": "#f7f9fb",
+                      "secondary-container": "#d0e1fb",
+                      "on-tertiary-fixed-variant": "#7b2f00",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "on-surface": "#191c1e",
+                      "surface-container-low": "#f2f4f6",
+                      "on-background": "#191c1e",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-tertiary-fixed": "#351000",
+                      "outline-variant": "#c7c4d8",
+                      "on-secondary-fixed": "#0b1c30",
+                      "surface-tint": "#4d44e3",
+                      "primary": "#3525cd",
+                      "on-primary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#3323cc",
+                      "inverse-primary": "#c3c0ff",
+                      "secondary": "#505f76",
+                      "background": "#f7f9fb",
+                      "inverse-surface": "#2d3133",
+                      "on-tertiary-container": "#ffd2be",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#c3c0ff",
+                      "tertiary-fixed-dim": "#ffb695",
+                      "surface-container-high": "#e6e8ea"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "32px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "sm": "8px",
+                      "container-max": "1440px",
+                      "xxl": "48px",
+                      "gutter": "24px",
+                      "xs": "4px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "display": ["Inter"],
+                      "h1": ["Inter"],
+                      "label-md": ["Inter"],
+                      "h2": ["Inter"],
+                      "h3": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"]
+              },
+              "fontSize": {
+                      "display": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "h1": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "h2": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "h3": ["20px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-background h-screen w-full relative overflow-hidden">
+<!-- Faint background context (Dashboard) -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6GKhGkIH4jD_inVq2Bs-oC1Feys6qMN7p05JqhlfZ6BgNJjR3CXLU4pO5srmy-KuAJs9dnol-RI720VZy8uKVFLjtnWbGEMIrja3YKQSAYkoKs2unVmkjItCDZamtxzHJJm0Z_h8RIuBF6zxd8UJPKkHJMNJ8ettuZFEI_22pVICPuqu3tFBHkrKJGwoliQaM3UeMIkUCYegnxWaGOMKvwne-wJfrNi8hj4s47RREBg44grJQsgSMiA53Gr-9X9PG6SCA_AH-9yA'); background-size: cover; background-position: center;"></div>
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md px-md">
+<!-- Modal Container -->
+<div class="bg-surface-container-lowest w-full max-w-[650px] rounded-lg shadow-2xl relative flex flex-col">
+<!-- Close Button -->
+<button class="absolute top-md right-md text-secondary hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">close</span>
+</button>
+<!-- Header Content -->
+<div class="flex flex-col items-center pt-xl px-xl pb-lg text-center">
+<!-- Icon -->
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mb-lg">
+<span class="material-symbols-outlined text-h1 text-primary-container" style="font-variation-settings: 'FILL' 0;">bolt</span>
+</div>
+<!-- Title & Subtext -->
+<h2 class="font-h2 text-h2 text-on-surface mb-sm">Unlock AgencyOS Pro</h2>
+<p class="font-body-md text-body-md text-secondary max-w-[480px]">
+                    You are growing fast. You have reached the 3-project limit of the Starter tier. Upgrade to remove all friction and scale your agency.
+                </p>
+</div>
+<!-- Value Prop Box -->
+<div class="px-xl pb-xl">
+<div class="bg-surface border border-surface-variant rounded-lg p-lg">
+<!-- Row 1 -->
+<div class="flex items-center justify-between py-md border-b border-surface-variant last:border-0 first:pt-0">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[#10B981] font-h3 text-h3">check_circle</span>
+<span class="font-label-md text-label-md text-on-surface">Unlimited Active Projects</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary">Scale without limits</span>
+</div>
+<!-- Row 2 -->
+<div class="flex items-center justify-between py-md border-b border-surface-variant last:border-0">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[#10B981] font-h3 text-h3">check_circle</span>
+<span class="font-label-md text-label-md text-on-surface">Advanced Team RBAC</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary">Up to 15 members</span>
+</div>
+<!-- Row 3 -->
+<div class="flex items-center justify-between py-md border-b border-surface-variant last:border-0 last:pb-0">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[#10B981] font-h3 text-h3">check_circle</span>
+<span class="font-label-md text-label-md text-on-surface">White-labeled Client Portals</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary">Custom branding</span>
+</div>
+</div>
+</div>
+<!-- Footer / Actions -->
+<div class="px-xl py-lg bg-surface-container-low rounded-b-lg flex justify-end items-center gap-md border-t border-surface-variant">
+<button class="font-label-md text-label-md text-secondary hover:text-on-surface px-md py-sm transition-colors">
+                    Stay on Starter
+                </button>
+<button class="font-label-md text-label-md bg-primary-container text-on-primary hover:bg-primary-container/90 px-lg py-sm rounded-lg transition-colors h-[40px] flex items-center justify-center">
+                    Upgrade to Pro — $299/mo
+                </button>
+</div>
+</div>
+</div>
+</body></html>
